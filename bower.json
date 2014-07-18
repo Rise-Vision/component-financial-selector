@@ -1,0 +1,27 @@
+{
+  "name": "component-financial-selector",
+  "version": "0.1.0",
+  "homepage": "https://github.com/Rise-Vision/component-financial-selector",
+  "authors": [
+    "Alex Deaconu <alex.deaconu@risevision.com>"
+  ],
+  "description": "Financial Selector",
+  "license": "GPL V3",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components",
+    "test",
+    "tmp"
+  ],
+  "devDependencies": {
+
+  },
+  "dependencies": {
+    "jquery": "1.11.0",
+    "bootstrap": "git://github.com/Rise-Vision/bootstrap",
+    "style-common": "git://github.com/Rise-Vision/style-common",
+    "angular": "1.2.18"
+  }
+}
