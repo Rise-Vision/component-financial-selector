@@ -20,7 +20,7 @@
     });
 
     it("Should correctly load", function () {
-      expect(element(by.id("financial-selector")).getText()).
+      expect(element(by.css(".btn.btn-link.btn-google")).getText()).
         to.eventually.equal("Financial Selector");
     });
 
