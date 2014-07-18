@@ -59,19 +59,19 @@
   });
 
   gulp.task("sass", function () {
-    return gulp.src("src/sass/main.scss")
+    return gulp.src("src/scss/*.scss")
       .pipe(sass())
       .pipe(gulp.dest("tmp/css"));
   });
 
   gulp.task("css", ["sass"], function () {
-    return gulp.src("tmp/css/main.css")
-      .pipe(rename("google-drive-picker.css"))
+    return gulp.src("tmp/css/*.css")
+      .pipe(concat("all.css"))
       .pipe(gulp.dest("dist/css"));
   });
 
   gulp.task("css-min", ["css"], function () {
-    return gulp.src("dist/css/google-drive-picker.css")
+    return gulp.src("dist/css/all.css")
       .pipe(minifyCSS({keepBreaks:true}))
       .pipe(rename(function (path) {
         path.basename += ".min";
@@ -80,7 +80,7 @@
   });
 
   gulp.task("html2js", function() {
-    return gulp.src("src/*.html")
+    return gulp.src("src/**/*.html")
       .pipe(html2js({
         outputModuleName: "risevision.widget.common.financialSelector",
         useStrict: true,
@@ -113,7 +113,7 @@
   });
 
   gulp.task("build", function (cb) {
-    runSequence(["clean", "config"], ["js-uglify"/*, "css-min"*/], cb);
+    runSequence(["clean", "config"], ["js-uglify", "css-min"], cb);
   });
 
   gulp.task("e2e:server", factory.testServer());
