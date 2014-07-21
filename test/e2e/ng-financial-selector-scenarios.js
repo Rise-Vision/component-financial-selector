@@ -19,31 +19,7 @@
       browser.get("/test/e2e/ng-financial-selector-scenarios.html");
     });
 
-    it("Should correctly load", function () {
-      expect(element(by.css(".btn.btn-link.btn-google")).getText()).
-        to.eventually.equal("Financial Selector");
-    });
 
-    xit("Should correctly pick a file", function () {
-      //open dialog
-      element(by.id("google-drive-picker")).click();
-      //simulate picks
-      element(by.id("simulate-pick")).click();
-      expect(element.all(by.css("#files-picked .file")).count()).to.
-        eventually.equal(3);
-    });
-
-    xit("Should correctly cancel a dialog", function () {
-      //initially not cancelled
-      expect(element(by.id("cancelled")).getAttribute("checked")).
-        to.eventually.be.null;
-      //open dialog
-      element(by.id("google-drive-picker")).click();
-      //simulate picks
-      element(by.id("simulate-cancel")).click();
-      expect(element(by.id("cancelled")).getAttribute("checked")).
-        to.eventually.not.be.null;
-    });
   });
 
 })();
