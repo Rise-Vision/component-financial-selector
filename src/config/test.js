@@ -1,3 +1,3 @@
 var CONFIG = {
-  GOOGLE_CLIENT_ID: "614513768474.apps.googleusercontent.com"
+  FINANCIAL_SERVER_URL: "http://contentfinancial2-test.appspot.com/"
 };
