@@ -1,4 +1,4 @@
-angular.module("risevision.widget.common.financialSelector")
+angular.module("risevision.widget.common.financial")
   .directive("tagManager", ["$templateCache", function($templateCache) {
     return {
       restrict: "E",

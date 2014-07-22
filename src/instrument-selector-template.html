@@ -3,7 +3,7 @@
     <div class="instrument-selector dropdown">
       <input class="form-control" type="text" placeholder="Add an instrument..."
       ng-model="newInstrument" ng-blur="dropdown(false)"></input>
-      <ul instrument-list class="dropdown-menu" role="menu">
+      <ul instrument-list search="newInstrument" class="dropdown-menu" role="menu">
       </ul>
     </div>
   </div>
