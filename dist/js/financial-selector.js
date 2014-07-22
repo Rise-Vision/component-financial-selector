@@ -4,7 +4,7 @@ var CONFIG = {
 
 "use strict";
 
-angular.module("risevision.widget.common.financialSelector", [])
+angular.module("risevision.widget.common.financial", ["risevision.widget.common.financial.service"])
   .directive("financialSelector", ["$document", "$window", "$log", "$templateCache",
     function ($document, $window, $log, $templateCache) {
     return {
@@ -24,9 +24,9 @@ angular.module("risevision.widget.common.financialSelector", [])
 
 "use strict";
 
-angular.module("risevision.widget.common.financialSelector")
-  .directive("instrumentList", ["$document", "$window", "$log", "$templateCache",
-    function ($document, $window, $log, $templateCache) {
+angular.module("risevision.widget.common.financial")
+  .directive("instrumentList", ["$document", "$window", "financialService", "$log", "$templateCache",
+    function ($document, $window, financialService, $log, $templateCache) {
     return {
       restrict: "A",
       scope: {
@@ -37,57 +37,25 @@ angular.module("risevision.widget.common.financialSelector")
         var document = $document[0];
         var $elem = $($element);
 
-        function callbackSuccess(dataTable) {
-          $scope.instruments = [];
-          for (i = 0; i < dataTable.getNumberOfRows(); i++) {
-            var row = {
-              "code": dataTable.getValue(i, 0),
-              "name": dataTable.getValue(i, 1)
-            };
-            $scope.instruments.push(row);
-          }
-        }
-
         function callbackError(message) {
 
         }
 
-        google.setOnLoadCallback(function() {
-          isVisualizationLoaded = true;
-
-          var url = CONFIG.FINANCIAL_SERVER_URL + "lookup/local";
-
-          var query = new google.visualization.Query(url, {
-            sendMethod: 'scriptInjection'
-          });
-
-          query.setQuery("where ((lower(code) like '%" + $scope.search + "%') or " +
-          "(lower(name) like '%aa%')) " +
-          "order by name limit 50 offset 0");
-
-          query.send(function(queryResponse) {
-            try {
-              if (queryResponse.isError()) {
-                callbackError(queryResponse.getMessage());
+        $scope.$watch("search", function(search) {
+          if (search) {
+            financialService.getInstruments(search).then(function (result) {
+              if (result) {
+                $scope.instruments = result;
               }
-              else {
-                var dataTable = queryResponse.getDataTable();
-                var cursor = dataTable.getTableProperty("cursor");
-
-                callbackSuccess(dataTable);
-              }
-            }
-            catch (err) {
-              callbackError(err.message);
-            }
-          });
+            });
+          }
         });
 
       }
     };
   }]);
 
-angular.module("risevision.widget.common.financialSelector")
+angular.module("risevision.widget.common.financial")
   .directive("instrumentSelector", ["$templateCache", function($templateCache) {
     return {
       restrict: "E",
@@ -134,7 +102,7 @@ angular.module("risevision.widget.common.financialSelector")
     };
   }]);
 
-angular.module("risevision.widget.common.financialSelector")
+angular.module("risevision.widget.common.financial")
   .directive("tagManager", ["$templateCache", function($templateCache) {
     return {
       restrict: "E",
@@ -151,9 +119,93 @@ angular.module("risevision.widget.common.financialSelector")
     };
   }]);
 
+angular.module("risevision.widget.common.financial.service", [])
+  .service("financialService", ["jsapiLoader", "$q", function (jsapiLoader, $q) {
+    this.getInstruments = function (search, cursor, count, sort) {
+      var deferred = $q.defer();
+      var obj = {
+          "search": search,
+          "cursor": cursor ? cursor : 0,
+          "count": count ? count : 50,
+          "sort": sort ? sort : "name"
+      };
+
+      function callbackSuccess(dataTable) {
+        var instruments = [];
+        for (i = 0; i < dataTable.getNumberOfRows(); i++) {
+          var row = {
+            "code": dataTable.getValue(i, 0),
+            "name": dataTable.getValue(i, 1)
+          };
+          instruments.push(row);
+        }
+        return instruments;
+      }
+
+      jsapiLoader.get().then(function (gApi) {
+        var url = CONFIG.FINANCIAL_SERVER_URL + "lookup/local";
+
+        var query = new gApi.Query(url, {
+          sendMethod: 'scriptInjection'
+        });
+
+        search = angular.lowercase(search);
+
+        query.setQuery("where ((lower(code) like '%" + search + "%') or " +
+        "(lower(name) like '%" + search + "%')) " +
+        "order by name limit 50 offset 0");
+
+        query.send(function(queryResponse) {
+          try {
+            if (queryResponse.isError()) {
+              callbackError(queryResponse.getMessage());
+            }
+            else {
+              var dataTable = queryResponse.getDataTable();
+              var cursor = dataTable.getTableProperty("cursor");
+
+              deferred.resolve(callbackSuccess(dataTable));
+            }
+          }
+          catch (err) {
+            callbackError(err.message);
+          }
+        });
+      });
+
+      return deferred.promise;
+    };
+  }]);
+
+angular.module("risevision.widget.common.financial.service")
+  .factory("jsapiLoader", ["$q", "$window", function ($q, $window) {
+    var jsapi = false;
+
+    var factory = {
+      get: function () {
+        var deferred = $q.defer();
+
+        if(jsapi || $window.google.visualization) {
+          jsapi = true;
+          deferred.resolve($window.google.visualization);
+        }
+        else {
+          $window.google.setOnLoadCallback(function () {
+            jsapi = true;
+            deferred.resolve($window.google.visualization);
+          });
+        }
+
+        return deferred.promise;
+      }
+    };
+    return factory;
+
+  }]);
+
 (function(module) {
-try { app = angular.module("risevision.widget.common.financialSelector"); }
-catch(err) { app = angular.module("risevision.widget.common.financialSelector", []); }
+try { app = angular.module("risevision.widget.common.financial"); }
+catch(err) { app = angular.module("risevision.widget.common.financial", []); }
 app.run(["$templateCache", function($templateCache) {
   "use strict";
   $templateCache.put("financial-selector-template.html",
@@ -164,23 +216,26 @@ app.run(["$templateCache", function($templateCache) {
 })();
 
 (function(module) {
-try { app = angular.module("risevision.widget.common.financialSelector"); }
-catch(err) { app = angular.module("risevision.widget.common.financialSelector", []); }
+try { app = angular.module("risevision.widget.common.financial"); }
+catch(err) { app = angular.module("risevision.widget.common.financial", []); }
 app.run(["$templateCache", function($templateCache) {
   "use strict";
   $templateCache.put("instrument-list-template.html",
     "<li class=\"dropdown-header\">Instruments</li>\n" +
     "<li class=\"divider\"></li>\n" +
     "<li ng-repeat=\"item in instruments\">\n" +
-    "  <a href=\"#\">{{item.code}}</a>{{item.name}}\n" +
+    "  <span>\n" +
+    "    <a href=\"#\">{{item.code}}</a>\n" +
+    "    {{item.name}}\n" +
+    "  </span>\n" +
     "</li>\n" +
     "");
 }]);
 })();
 
 (function(module) {
-try { app = angular.module("risevision.widget.common.financialSelector"); }
-catch(err) { app = angular.module("risevision.widget.common.financialSelector", []); }
+try { app = angular.module("risevision.widget.common.financial"); }
+catch(err) { app = angular.module("risevision.widget.common.financial", []); }
 app.run(["$templateCache", function($templateCache) {
   "use strict";
   $templateCache.put("instrument-selector-template.html",
@@ -189,7 +244,7 @@ app.run(["$templateCache", function($templateCache) {
     "    <div class=\"instrument-selector dropdown\">\n" +
     "      <input class=\"form-control\" type=\"text\" placeholder=\"Add an instrument...\"\n" +
     "      ng-model=\"newInstrument\" ng-blur=\"dropdown(false)\"></input>\n" +
-    "      <ul instrument-list class=\"dropdown-menu\" role=\"menu\">\n" +
+    "      <ul instrument-list search=\"newInstrument\" class=\"dropdown-menu\" role=\"menu\">\n" +
     "      </ul>\n" +
     "    </div>\n" +
     "  </div>\n" +
@@ -202,8 +257,8 @@ app.run(["$templateCache", function($templateCache) {
 })();
 
 (function(module) {
-try { app = angular.module("risevision.widget.common.financialSelector"); }
-catch(err) { app = angular.module("risevision.widget.common.financialSelector", []); }
+try { app = angular.module("risevision.widget.common.financial"); }
+catch(err) { app = angular.module("risevision.widget.common.financial", []); }
 app.run(["$templateCache", function($templateCache) {
   "use strict";
   $templateCache.put("tag-manager-template.html",

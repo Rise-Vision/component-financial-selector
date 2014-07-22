@@ -1,4 +1,4 @@
-angular.module("risevision.widget.common.financialSelector")
+angular.module("risevision.widget.common.financial")
   .directive("instrumentSelector", ["$templateCache", function($templateCache) {
     return {
       restrict: "E",

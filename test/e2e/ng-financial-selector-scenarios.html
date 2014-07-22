@@ -7,6 +7,7 @@
 
 <div id="financial-selector" financial-selector></div>
 
+<script type="text/javascript" src="../../components/jquery/dist/jquery.js"></script>
 <script type="text/javascript" src="../../components/angular/angular.js"></script>
 <!-- <script type="text/javascript" src="//apis.google.com/js/client.js"></script> -->
 <script type="text/javascript" src="../gapi-mock.js"></script>
@@ -14,7 +15,7 @@
 <script src="http://www.google.com/jsapi"></script>
 
 <script type="text/javascript">
-angular.module('testapp', ['risevision.widget.common.financialSelector'])
+angular.module('testapp', ['risevision.widget.common.financial'])
   .controller("mainController", ["$scope", "$window", function ($scope, $window) {
     $scope.$on("picked", function (event, files) {
       $scope.filesPicked = files;

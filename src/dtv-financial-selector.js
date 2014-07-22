@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module("risevision.widget.common.financialSelector", [])
+angular.module("risevision.widget.common.financial", ["risevision.widget.common.financial.service"])
   .directive("financialSelector", ["$document", "$window", "$log", "$templateCache",
     function ($document, $window, $log, $templateCache) {
     return {

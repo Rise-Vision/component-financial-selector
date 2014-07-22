@@ -82,7 +82,7 @@
   gulp.task("html2js", function() {
     return gulp.src("src/**/*.html")
       .pipe(html2js({
-        outputModuleName: "risevision.widget.common.financialSelector",
+        outputModuleName: "risevision.widget.common.financial",
         useStrict: true,
         base: "src"
       }))

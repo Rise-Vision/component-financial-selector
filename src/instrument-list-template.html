@@ -1,5 +1,8 @@
 <li class="dropdown-header">Instruments</li>
 <li class="divider"></li>
 <li ng-repeat="item in instruments">
-  <a href="#">{{item.code}}</a>{{item.name}}
+  <span>
+    <a href="#">{{item.code}}</a>
+    {{item.name}}
+  </span>
 </li>
