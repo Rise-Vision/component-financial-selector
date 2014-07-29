@@ -14,11 +14,14 @@
 
   browser.driver.manage().window().setSize(1024, 768);
 
-  describe("Google Drive Picker Component", function() {
+  describe("Financial Selector Component", function() {
     beforeEach(function (){
       browser.get("/test/e2e/ng-financial-selector-scenarios.html");
     });
 
+    xit("Should correctly save settings", function (done) {
+      //TODO
+    });
 
   });
 

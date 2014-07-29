@@ -22,6 +22,9 @@
     "jquery": "1.11.0",
     "bootstrap": "git://github.com/Rise-Vision/bootstrap",
     "style-common": "git://github.com/Rise-Vision/style-common",
-    "angular": "1.2.18"
+    "angular": "1.2.18",
+    "angular-mocks": "1.2.18",
+    "q": "1.0.1",
+    "select2": "git://github.com/ivaynberg/select2"
   }
 }

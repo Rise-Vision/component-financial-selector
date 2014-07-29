@@ -3,7 +3,7 @@ angular.module("risevision.widget.common.financial.service")
     var jsapi = false;
 
     var factory = {
-      get: function () {
+      getVisualization: function () {
         var deferred = $q.defer();
 
         if(jsapi || $window.google.visualization) {
