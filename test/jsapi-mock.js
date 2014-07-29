@@ -36,16 +36,4 @@
       }
     }
   };
-  window.pickFiles = function (files) {
-    var req = {};
-    req[window.google.picker.Response.ACTION] = window.google.picker.Action.PICKED;
-    req[window.google.picker.Response.DOCUMENTS] = files;
-    window._pickerCallbackFn.call(null, req);
-  };
-  window.dialogCancel = function () {
-    var req = {};
-    req[window.google.picker.Response.ACTION] = window.google.picker.Action.CANCEL;
-    window._pickerCallbackFn.call(null, req);
-  };
-
 })(window);

@@ -11,9 +11,9 @@ angular.module("risevision.widget.common.financial")
           var value = $elem.val();
           if (value && $.inArray(value, $scope.instruments) === -1) {
             $scope.instruments.push(value);
-
-            $elem.select2("val", "");
           }
+          // Clear out text box
+          $elem.select2("val", "");
         };
 
         $elem.bind("change", function(event) {
