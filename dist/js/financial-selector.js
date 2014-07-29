@@ -130,17 +130,15 @@ angular.module("risevision.widget.common.financial.service", [])
         query.setQuery(formQuerystring(obj));
 
         query.send(function(queryResponse) {
-          try {
-            if (queryResponse.isError()) {
-              deferred.reject(queryResponse.getMessage());
-            }
-            else {
-              var dataTable = queryResponse.getDataTable();
-              deferred.resolve(processInstruments(dataTable));
-            }
+          if (!queryResponse) {
+            deferred.reject("No response");
           }
-          catch (err) {
-            deferred.reject(err.message);
+          else if (queryResponse.isError()) {
+            deferred.reject(queryResponse.getMessage());
+          }
+          else {
+            var dataTable = queryResponse.getDataTable();
+            deferred.resolve(processInstruments(dataTable));
           }
         });
       });
@@ -163,17 +161,15 @@ angular.module("risevision.widget.common.financial.service", [])
         query.setQuery(formQuerystring(obj));
 
         query.send(function(queryResponse) {
-          try {
-            if (queryResponse.isError()) {
-              deferred.reject(queryResponse.getMessage());
-            }
-            else {
-              var dataTable = queryResponse.getDataTable();
-              deferred.resolve(callbackSuccess(dataTable));
-            }
+          if (!queryResponse) {
+            deferred.reject("No response");
           }
-          catch (err) {
-            deferred.reject(err.message);
+          else if (queryResponse.isError()) {
+            deferred.reject(queryResponse.getMessage());
+          }
+          else {
+            var dataTable = queryResponse.getDataTable();
+            deferred.resolve(processInstruments(dataTable));
           }
         });
       });
