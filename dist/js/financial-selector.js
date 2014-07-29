@@ -50,11 +50,16 @@ angular.module("risevision.widget.common.financial")
           placeholder: "Add an instrument...",
           query: function (query) {
             if (query.term) {
-              financialService.getInstruments({"search": query.term}).then(function (result) {
-                if (result) {
-                  query.callback({results: result});
+              financialService.getInstruments({"search": query.term}).then(
+                function (result) {
+                  if (result) {
+                    query.callback({results: result});
+                  }
+                },
+                function (reason) {
+                  // TODO
                 }
-              });
+              );
             }
           }
         });
@@ -120,7 +125,7 @@ angular.module("risevision.widget.common.financial.service", [])
 
       obj = angular.extend(defaultObj, obj);
 
-      jsapiLoader.get().then(function (gApi) {
+      jsapiLoader.getVisualization().then(function (gApi) {
         var url = CONFIG.FINANCIAL_SERVER_URL + "lookup/local";
 
         var query = new gApi.Query(url, {
@@ -151,7 +156,7 @@ angular.module("risevision.widget.common.financial.service", [])
 
       obj = angular.extend(defaultObj, obj);
 
-      jsapiLoader.get().then(function (gApi) {
+      jsapiLoader.getVisualization().then(function (gApi) {
         var url = CONFIG.FINANCIAL_SERVER_URL + "lookup/remote";
 
         var query = new gApi.Query(url, {
@@ -183,7 +188,7 @@ angular.module("risevision.widget.common.financial.service")
     var jsapi = false;
 
     var factory = {
-      get: function () {
+      getVisualization: function () {
         var deferred = $q.defer();
 
         if(jsapi || $window.google.visualization) {

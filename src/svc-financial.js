@@ -38,7 +38,7 @@ angular.module("risevision.widget.common.financial.service", [])
 
       obj = angular.extend(defaultObj, obj);
 
-      jsapiLoader.get().then(function (gApi) {
+      jsapiLoader.getVisualization().then(function (gApi) {
         var url = CONFIG.FINANCIAL_SERVER_URL + "lookup/local";
 
         var query = new gApi.Query(url, {
@@ -69,7 +69,7 @@ angular.module("risevision.widget.common.financial.service", [])
 
       obj = angular.extend(defaultObj, obj);
 
-      jsapiLoader.get().then(function (gApi) {
+      jsapiLoader.getVisualization().then(function (gApi) {
         var url = CONFIG.FINANCIAL_SERVER_URL + "lookup/remote";
 
         var query = new gApi.Query(url, {

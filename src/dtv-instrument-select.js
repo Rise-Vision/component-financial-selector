@@ -26,11 +26,16 @@ angular.module("risevision.widget.common.financial")
           placeholder: "Add an instrument...",
           query: function (query) {
             if (query.term) {
-              financialService.getInstruments({"search": query.term}).then(function (result) {
-                if (result) {
-                  query.callback({results: result});
+              financialService.getInstruments({"search": query.term}).then(
+                function (result) {
+                  if (result) {
+                    query.callback({results: result});
+                  }
+                },
+                function (reason) {
+                  // TODO
                 }
-              });
+              );
             }
           }
         });

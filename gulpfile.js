@@ -19,7 +19,6 @@
   var jsFiles = [
     "src/**/*.js",
     "test/**/*.js",
-    "!./src/components/**/*"
   ];
 
   gulp.task("clean-dist", function () {
@@ -116,6 +115,18 @@
     runSequence(["clean", "config"], ["js-uglify", "css-min"], cb);
   });
 
+  gulp.task("test:unit:ng", factory.testUnitAngular({
+    testFiles: [
+      "components/q/q.js",
+      "components/angular/angular.js",
+      "components/angular-mocks/angular-mocks.js",
+      "test/jsapi-mock.js",
+      "src/config/test.js",
+      "src/*.js",
+      "test/unit/**/*spec.js"
+    ]
+  }));
+
   gulp.task("e2e:server", factory.testServer());
   gulp.task("e2e:server-close", factory.testServerClose());
 
@@ -131,7 +142,7 @@
   });
 
   gulp.task("test", ["build"], function (cb) {
-    return runSequence("test:e2e:ng", "metrics", cb);
+    return runSequence("test:unit:ng", "test:e2e:ng", "metrics", cb);
   });
 
   gulp.task("default", ["build"]);
