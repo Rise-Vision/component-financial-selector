@@ -1,0 +1,50 @@
+<!-- *********************************
+    Template for Building a Demo
+      Page for Your Component
+********************************** -->
+<div class="component">
+  <div class="page-header">
+    <h1 class="page">Financial Selector</h1>
+  </div>
+
+  <p class="lead">A widget component for looking up and selecting stocks</p>
+
+  <p><strong>Dependencies</strong> <span class="label label-info">select2</span> <span class="label label-info">Google JSAPI</span></p>
+
+	<h3 class="add-top">Usage</h3>
+	<hljs include="'financial-widget-usage'"></hljs>
+
+	<h3>Script Includes</h3>
+	<p>Make sure you include the following files in <code>index.html</code> and initiate the Google JSAPI</p>
+	<hljs include="'script-includes'"></hljs>
+
+	<!-- Dynamic Example -->
+  <div class="examples">
+  	<h3>Example</h3>
+		<div financial-selector instruments="instruments"></div>
+	</div>
+</div>
+
+
+<script type="text/ng-template" id="script-includes">
+www.google.com/jsapi
+bower_components/component-financial-selector/dist/js/financial-selector.js
+bower_components/select2/select2.js
+<script>
+    google.load("visualization", "1");
+</ script>
+</script>
+
+    <!-- Code Snippet -->
+<script type="text/ng-template" id="financial-widget-usage">
+<form role="form">
+	<div class="row">
+		<div class="col-md-7">
+			<div class="form-group">
+				<label for="instruments"></label>
+				<div financial-selector instruments="instruments"></div>
+			</div>
+		</div>
+	</div>
+</form>
+</script>
