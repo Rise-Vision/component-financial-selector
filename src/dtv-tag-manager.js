@@ -1,4 +1,4 @@
-angular.module("risevision.widget.common.financial")
+angular.module("risevision.widget.common.tag-manager", [])
   .directive("tagManager", ["$templateCache", function($templateCache) {
     return {
       restrict: "E",
@@ -6,7 +6,7 @@ angular.module("risevision.widget.common.financial")
         tags: "="
       },
       template: $templateCache.get("tag-manager-template.html"),
-      link: function ( $scope, $element ) {
+      link: function ($scope) {
         // This is the ng-click handler to remove an item
         $scope.remove = function ( idx ) {
           $scope.tags.splice( idx, 1 );
