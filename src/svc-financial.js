@@ -10,11 +10,11 @@ angular.module("risevision.widget.common.financial.service", [])
 
     function processInstruments(dataTable) {
       var instruments = [];
-      for (i = 0; i < dataTable.getNumberOfRows(); i++) {
+      for (var i = 0; i < dataTable.getNumberOfRows(); i++) {
         var row = {
           "id": dataTable.getValue(i, 0),
-          "text": dataTable.getValue(i, 0)
-          + (dataTable.getValue(i, 1) ? " - " + dataTable.getValue(i, 1) : "")
+          "text": dataTable.getValue(i, 0) +
+          (dataTable.getValue(i, 1) ? " - " + dataTable.getValue(i, 1) : "")
         };
         instruments.push(row);
       }

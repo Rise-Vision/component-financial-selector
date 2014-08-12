@@ -14,9 +14,9 @@ angular.module("risevision.widget.common.financial")
           }
           // Clear out text box
           $elem.select2("val", "");
-        };
+        }
 
-        $elem.bind("change", function(event) {
+        $elem.bind("change", function() {
           // There's probably a better way to handle this...
           $scope.$apply(add());
         });
@@ -32,7 +32,7 @@ angular.module("risevision.widget.common.financial")
                     query.callback({results: result});
                   }
                 },
-                function (reason) {
+                function () {
                   // TODO
                 }
               );

@@ -1,19 +1,26 @@
 "use strict";
 
-angular.module("risevision.widget.common.financial", ["risevision.widget.common.financial.service"])
-  .directive("financialSelector", ["$document", "$window", "$log", "$templateCache",
-    function ($document, $window, $log, $templateCache) {
+angular.module("risevision.widget.common.financial", [
+  "risevision.widget.common.financial.service",
+  "risevision.widget.common.tag-manager"
+  ])
+  .directive("financialSelector", ["$templateCache",
+    function ($templateCache) {
     return {
       restrict: "AE",
+      require: "ngModel",
       scope: {
         instruments: "=",
         viewId: "@"
       },
       template: $templateCache.get("financial-selector-template.html"),
-      link: function ($scope, $element, attrs) {
-        var document = $document[0];
-        var $elem = $($element);
-
+      link: function($scope, elm, attrs, ctrl) {
+        // Adding watch to populate model with number of instruments
+        $scope.$watch("instruments", function (instruments) {
+          if (instruments) {
+            ctrl.$setValidity("required", instruments.length);
+          }
+        }, true);
       }
     };
   }]);

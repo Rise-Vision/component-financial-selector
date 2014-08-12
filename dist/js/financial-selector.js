@@ -4,20 +4,27 @@ var CONFIG = {
 
 "use strict";
 
-angular.module("risevision.widget.common.financial", ["risevision.widget.common.financial.service"])
-  .directive("financialSelector", ["$document", "$window", "$log", "$templateCache",
-    function ($document, $window, $log, $templateCache) {
+angular.module("risevision.widget.common.financial", [
+  "risevision.widget.common.financial.service",
+  "risevision.widget.common.tag-manager"
+  ])
+  .directive("financialSelector", ["$templateCache",
+    function ($templateCache) {
     return {
       restrict: "AE",
+      require: "ngModel",
       scope: {
         instruments: "=",
         viewId: "@"
       },
       template: $templateCache.get("financial-selector-template.html"),
-      link: function ($scope, $element, attrs) {
-        var document = $document[0];
-        var $elem = $($element);
-
+      link: function($scope, elm, attrs, ctrl) {
+        // Adding watch to populate model with number of instruments
+        $scope.$watch("instruments", function (instruments) {
+          if (instruments) {
+            ctrl.$setValidity("required", instruments.length);
+          }
+        }, true);
       }
     };
   }]);
@@ -38,9 +45,9 @@ angular.module("risevision.widget.common.financial")
           }
           // Clear out text box
           $elem.select2("val", "");
-        };
+        }
 
-        $elem.bind("change", function(event) {
+        $elem.bind("change", function() {
           // There's probably a better way to handle this...
           $scope.$apply(add());
         });
@@ -56,7 +63,7 @@ angular.module("risevision.widget.common.financial")
                     query.callback({results: result});
                   }
                 },
-                function (reason) {
+                function () {
                   // TODO
                 }
               );
@@ -68,7 +75,7 @@ angular.module("risevision.widget.common.financial")
     };
   }]);
 
-angular.module("risevision.widget.common.financial")
+angular.module("risevision.widget.common.tag-manager", [])
   .directive("tagManager", ["$templateCache", function($templateCache) {
     return {
       restrict: "E",
@@ -76,7 +83,7 @@ angular.module("risevision.widget.common.financial")
         tags: "="
       },
       template: $templateCache.get("tag-manager-template.html"),
-      link: function ( $scope, $element ) {
+      link: function ($scope) {
         // This is the ng-click handler to remove an item
         $scope.remove = function ( idx ) {
           $scope.tags.splice( idx, 1 );
@@ -97,11 +104,11 @@ angular.module("risevision.widget.common.financial.service", [])
 
     function processInstruments(dataTable) {
       var instruments = [];
-      for (i = 0; i < dataTable.getNumberOfRows(); i++) {
+      for (var i = 0; i < dataTable.getNumberOfRows(); i++) {
         var row = {
           "id": dataTable.getValue(i, 0),
-          "text": dataTable.getValue(i, 0)
-          + (dataTable.getValue(i, 1) ? " - " + dataTable.getValue(i, 1) : "")
+          "text": dataTable.getValue(i, 0) +
+          (dataTable.getValue(i, 1) ? " - " + dataTable.getValue(i, 1) : "")
         };
         instruments.push(row);
       }
