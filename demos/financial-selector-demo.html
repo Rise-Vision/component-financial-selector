@@ -12,6 +12,7 @@
   <p><strong>Dependencies</strong> <span class="label label-info">select2</span> <span class="label label-info">Google JSAPI</span></p>
 
 	<h3 class="add-top">Usage</h3>
+  <p>Optionally include ng-model parameter for validation.</p>
 	<hljs include="'financial-widget-usage'"></hljs>
 
 	<h3>Script Includes</h3>
@@ -42,7 +43,7 @@ bower_components/select2/select2.js
 		<div class="col-md-7">
 			<div class="form-group">
 				<label for="instruments"></label>
-				<div financial-selector instruments="instruments"></div>
+				<div financial-selector instruments="instruments" ng-model="financialselectormodel"></div>
 			</div>
 		</div>
 	</div>
