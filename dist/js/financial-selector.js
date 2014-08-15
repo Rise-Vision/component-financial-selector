@@ -239,7 +239,7 @@ app.run(["$templateCache", function($templateCache) {
     "<div class=\"tags\">\n" +
     "  <span ng-repeat=\"(idx, tag) in tags\" class=\"label label-primary\">\n" +
     "    {{tag}}\n" +
-    "    <span class=\"glyphicon glyphicon-remove\" ng-click=\"remove(idx)\"></span>\n" +
+    "    <span class=\"glyphicon glyphicon-minus\" ng-click=\"remove(idx)\"></span>\n" +
     "  </span>\n" +
     "</div>\n" +
     "");
