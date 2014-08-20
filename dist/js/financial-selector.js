@@ -224,8 +224,8 @@ catch(err) { app = angular.module("risevision.widget.common.financial", []); }
 app.run(["$templateCache", function($templateCache) {
   "use strict";
   $templateCache.put("financial-selector-template.html",
-    "<tag-manager class=\"tag-manager\" tags=\"instruments\"></tag-manager>\n" +
     "<input type=\"hidden\" instrument-select instruments=\"instruments\" style=\"width:300px;\">\n" +
+    "<tag-manager class=\"tag-manager\" tags=\"instruments\"></tag-manager>\n" +
     "");
 }]);
 })();
@@ -237,9 +237,9 @@ app.run(["$templateCache", function($templateCache) {
   "use strict";
   $templateCache.put("tag-manager-template.html",
     "<div class=\"tags\">\n" +
-    "  <span ng-repeat=\"(idx, tag) in tags\" class=\"label label-primary\">\n" +
+    "  <span ng-repeat=\"(idx, tag) in tags\" class=\"label label-default\">\n" +
     "    {{tag}}\n" +
-    "    <span class=\"glyphicon glyphicon-minus\" ng-click=\"remove(idx)\"></span>\n" +
+    "    <span class=\"glyphicon glyphicon-minus-sign\" ng-click=\"remove(idx)\"></span>\n" +
     "  </span>\n" +
     "</div>\n" +
     "");
