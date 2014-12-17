@@ -1,4 +1,4 @@
-# Financial Selector [![Build Status](http://devtools1.risevision.com:8080/job/Component-Financial-Selector-Master/badge/icon)](http://devtools1.risevision.com:8080/job/Component-Financial-Selector-Master/)
+# Financial Selector [![Circle CI](https://circleci.com/gh/Rise-Vision/component-financial-selector/tree/master.svg?style=svg)](https://circleci.com/gh/Rise-Vision/component-financial-selector/tree/master)
 
 ## Introduction
 
