@@ -1,6 +1,5 @@
-var CONFIG = {
-  FINANCIAL_SERVER_URL: "https://contentfinancial2-test.appspot.com/"
-};
+angular.module("risevision.widget.common.financial.config", [])
+  .constant("FINANCIAL_SERVER_URL", "https://contentfinancial2.appspot.com/");
 
 "use strict";
 
@@ -94,8 +93,10 @@ angular.module("risevision.widget.common.tag-manager", [])
     };
   }]);
 
-angular.module("risevision.widget.common.financial.service", [])
-  .service("financialService", ["jsapiLoader", "$q", function (jsapiLoader, $q) {
+angular.module("risevision.widget.common.financial.service", 
+  ["risevision.widget.common.financial.config"])
+  .service("financialService", ["jsapiLoader", "$q", "FINANCIAL_SERVER_URL", 
+  function (jsapiLoader, $q, FINANCIAL_SERVER_URL) {
 
     var defaultObj = {
       "search": "",
@@ -135,7 +136,7 @@ angular.module("risevision.widget.common.financial.service", [])
       obj = angular.extend(defaultObj, obj);
 
       jsapiLoader.getVisualization().then(function (gApi) {
-        var url = CONFIG.FINANCIAL_SERVER_URL + "lookup/local";
+        var url = FINANCIAL_SERVER_URL + "lookup/local";
 
         var query = new gApi.Query(url, {
           sendMethod: 'scriptInjection'
@@ -166,7 +167,7 @@ angular.module("risevision.widget.common.financial.service", [])
       obj = angular.extend(defaultObj, obj);
 
       jsapiLoader.getVisualization().then(function (gApi) {
-        var url = CONFIG.FINANCIAL_SERVER_URL + "lookup/remote";
+        var url = FINANCIAL_SERVER_URL + "lookup/remote";
 
         var query = new gApi.Query(url, {
           sendMethod: 'scriptInjection'
