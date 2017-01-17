@@ -1,5 +1,8 @@
 # Financial Selector [![Circle CI](https://circleci.com/gh/Rise-Vision/component-financial-selector/tree/master.svg?style=svg)](https://circleci.com/gh/Rise-Vision/component-financial-selector/tree/master)
 
+# DEPRECATION NOTICE
+## This item is used in the [Financial Table Widget](https://github.com/Rise-Vision/widget-financial-table) which has been deprecated in favor of the [Financial Web Component](https://github.com/Rise-Vision/rise-financial)
+
 ## Introduction
 
 The Financial Selector component is an Angular directive used which is used to select Instruments available from the Financial Server
